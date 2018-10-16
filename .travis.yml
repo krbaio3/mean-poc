@@ -1,42 +1,92 @@
-sudo: false
-dist: trusty
+os:
+- linux
+service:
+- docker
 language: node_js
-
-cache:
-  directories:
-    - node_modules
-
+node_js:
+- stable
 addons:
+  firefox: latest
   apt:
     sources:
-      - google-chrome
+    - google-chrome
     packages:
-      - google-chrome-stable
-
-node_js:
-  - "node"
-
-matrix:
-  fast_finish: true
-
+    - google-chrome-stable
+dist: trusty
+sudo: true
+env:
+  global:
+  - apiKey=$apiKey
+  - authDomain=$authDomain
+  - databaseURL=$databaseURL
+  - projectId=$projectId
+  - storageBucket=$storageBucket
+  - messagingSenderId=$messagingSenderId
+  - MOZ_HEADLESS=1
+cache:
+  yarn: true
+  directories:
+  - node_modules
 before_install:
-  - npm install npm@6 -g
-  - npm cache verify
-  - npm prune
-  - npm update
-
+- yarn global add @angular/cli
 install:
-  - npm install
-
-after_install:
-  - npm rebuild node-sass
-  - ./node_modules/protractor/bin/webdriver-manager update
-
-before_script:
-  - npm rebuild node-sass
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3
-
-script:
-  - npm run ci:travis
+- yarn install
+jobs:
+  include:
+  - stage: Tests
+    name: Unit Test
+    script: yarn travis:test
+  - stage: Tests
+    if: branch = master
+    name: Integration Test
+    before_script: yarn travis:webdriver-update
+    script: yarn travis:e2e
+  - stage: Tests
+    if: branch = master
+    name: Acceptance Test
+    before_script: yarn travis:webdriver-update
+    script: yarn travis:cucumber
+  - stage: Build
+    name: Build App
+    script: yarn travis:build
+  - stage: Deploy to develop
+    name: Deploy App to Heroku (develop)
+    if: branch = develop
+    script: yarn travis:build
+    deploy:
+      provider: heroku
+      api_key:
+        secure: "$HEROKU_API_KEY"
+      app: bardock-ng
+      local_dir: dist/bardock
+      skip_cleanup: true
+      on:
+        branch: develop
+  - stage: Test Develop
+    name: Curl to Dev
+    if: branch = develop
+    script: curl https://bardock-ng.herokuapp.com/
+  - stage: deploy to production
+    name: Deploy App to Firebase Hosting (master)
+    if: branch = master
+    before_script: yarn global add firebase-tools
+    if: branch = master
+    script: yarn travis:build
+    if: branch = master
+    after_script: yarn travis:deploy
+  - stage: Test Production
+    name: Curl to Prod
+    if: branch = master
+    script: curl https://bardock-ng.firebaseapp.com/
+branches:
+  only:
+  - master
+  - develop
+notifications:
+  email:
+    recipients:
+    - krbaio3@gmail.com
+    on_success: never
+    on_failure: always
+  slack:
+    secure: fIYgEhf20QGAbzXhdHT+Xuh1MVKMZbSsCeNu+GreCXNnDJOnAug9/axNGqf7wl0IOaBa2nYPToC//6LIRiUSKBOCxBKFDNya9htuSTGStt2Dlf1xw9YF2EeqjoydgtM9Z6IbfmWQRu4O/KCsxhtISIgr8ZTOTsJaxGyf9hkSjtDmTaqzwlYQGGres8b7yZUqd+XW637OSxlKPNzq/y0gplaQl3j9Pa7u8L94f/QaU6+ErgQxaz+gLdjs3rMWb0u82brM1BGLLNn49iaJn8lV1aq8N+jQAWys7A8uiwQJ7fL4YtqCvsMuEArHRfRDRawCKU6JL5jYfxOfqnttgPhxuirSh/IfD+7hh5q0waBplo78pQJNg5LovmWRKkvkhazv1kLe+0y/v9ulSPkveTlZvTbI180TEP3qRRJAYF2iOjL77Ailq2eZwP0gPu/EJwOyWXi6SlPbk76SIAGTDhP6xR0vx7goXreHJDQeUJ+Hk9SeCzKH6UmGtzaBsvQlzYCvdyJ5NkQJX/kx09fix12dmIIS/6PLn1tEqSByx3+uId9mfcblBWN+ncK1jIAAT/0k1wtNjvjhEIBM+/vZMHsrsza/A0mU8mdDnV85qV8N6oM/ipIr9Nl6ftEquosdH+p9qRUkMe9btCtEJREUKBpIDoivsHY4d5KipzaW44F27jE=
