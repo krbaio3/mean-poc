@@ -1,6 +1,6 @@
 {
   "name": "mean-course",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "mean-poc",
   "keywords": [],
   "homepage": "https://github.com/krbaio3/mean-poc#readme",
@@ -16,6 +16,9 @@
   "main": "index.js",
   "scripts": {
     "build2": "npm run build:dev",
+    "watch:ts": "tsc -w",
+    "watch:node": "nodemon dist/server.js",
+    "watch-dev": "concurrently -k -p \"[{name}]\" -n \"TypeScript, Node\" -c \"yello.bold, cyan.bold\" \"yarn run watch:ts\" \"yarn run watch:node\"",
     "build": "tsc",
     "dev": "ts-node ./lib/server.ts",
     "start": "nodemon ./dist/server.js",
@@ -146,10 +149,6 @@
     "@types/morgan": "^1.7.32",
     "@types/node": "^10.11.6",
     "@types/passport": "^0.4.6",
-    "@webpack-cli/add": "^0.1.2",
-    "@webpack-cli/init": "^0.1.2",
-    "@webpack-cli/serve": "^0.1.2",
-    "@webpack-cli/update": "^0.1.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
@@ -170,10 +169,7 @@
     "tslint": "~5.11.0",
     "tslint-loader": "^3.5.4",
     "typedoc": "^0.13.0",
-    "typescript": "~3.1.1",
-    "uglifyjs-webpack-plugin": "^2.0.1",
-    "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2"
+    "typescript": "~3.1.1"
   },
   "engines": {
     "node": ">=8.0.0",
