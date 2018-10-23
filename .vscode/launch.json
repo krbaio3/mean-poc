@@ -10,11 +10,7 @@
             "request": "launch",
             "name": "nodemon",
             "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
-            "program": "${workspaceFolder}/lib/app.js",
-            "runtimeArgs": [
-                "--exec",
-                "babel-node",
-            ],
+            "program": "${workspaceFolder}/dist/index.js",
             "restart": true,
             "stopOnEntry": false,
             "console": "integratedTerminal",

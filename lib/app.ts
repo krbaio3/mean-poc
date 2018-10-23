@@ -1,21 +1,40 @@
+// 3rd party
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { Routes } from './routes/crmRoutes';
+import * as morgan from 'morgan';
+import * as cookieParser from 'cookie-parser';
 
-class App {
+// routes
+// import vehiclesRoutes from './routes/vehicle.routes';
+// import userRoutes from './routes/user.routes';
+
+export class App {
   public app: express.Application;
-  public routePrv: Routes = new Routes();
 
   constructor() {
+    // config cabeceras http
+    // module.exports = app;
+    // export const App = app;
     this.app = express();
     this.config();
-    this.routePrv.routes(this.app);
+    // this.routes();
   }
 
   private config(): void {
+    // config
+    this.app.use(morgan('dev'));
+    this.app.use(
+      bodyParser.urlencoded({
+        extended: false
+      })
+    );
     this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(cookieParser());
+  }
+
+  private routes(): void {
+    // rutas base
+    // this.app.use('/api', vehiclesRoutes);
+    // this.app.use('/api', userRoutes);
   }
 }
-
-export default new App().app;
