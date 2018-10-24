@@ -3,13 +3,16 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import * as cookieParser from 'cookie-parser';
+import * as cors from 'cors';
+import { Routes } from './routes';
 
 // routes
-// import vehiclesRoutes from './routes/vehicle.routes';
+// import { VehicleRouter } from './routes/vehicle.routes';
 // import userRoutes from './routes/user.routes';
 
 export class App {
   public app: express.Application;
+  public route: express.Router = new Routes().router;
 
   constructor() {
     // config cabeceras http
@@ -17,11 +20,15 @@ export class App {
     // export const App = app;
     this.app = express();
     this.config();
-    // this.routes();
+    this.middleware();
+    this.routes();
   }
 
-  private config(): void {
-    // config
+  private config(): void {}
+
+  private middleware(): void {
+    this.app.use(cors());
+    // this.app.use(morgan('short'));
     this.app.use(morgan('dev'));
     this.app.use(
       bodyParser.urlencoded({
@@ -33,8 +40,6 @@ export class App {
   }
 
   private routes(): void {
-    // rutas base
-    // this.app.use('/api', vehiclesRoutes);
-    // this.app.use('/api', userRoutes);
+    this.app.use('/api', this.route);
   }
 }

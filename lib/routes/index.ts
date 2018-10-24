@@ -14,4 +14,4 @@
 // export * from './bill.routes';
 // export * from './client.routes';
 // export * from './owner.routes';
-// export * from './vehicle.routes';
+export * from './vehicle.routes';
