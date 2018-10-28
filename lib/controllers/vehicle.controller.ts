@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Vehicle } from 'schemas/vehicle.schema';
+import { Vehicle } from '../schemas/vehicle.schema';
 
 export class VehicleController {
   public addVehicles(req: Request, res: Response, next: NextFunction): void {

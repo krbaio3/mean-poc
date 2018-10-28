@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt-nodejs';
-import { UserModel, User } from 'models';
+import { UserModel, User } from '../models';
 
 const SALT_WORK_FACTOR = 12;
 
