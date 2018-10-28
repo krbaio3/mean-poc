@@ -9,6 +9,7 @@ export class Routes {
     this.router = Router();
     this.router.use('/', (req: Request, res: Response, next: NextFunction) => {
       res.json('server runnning in /');
+      console.log('Cookies: ', req.cookies);
     });
     this.router.use('/vehicles', this.vehiclesRouter.router);
   }

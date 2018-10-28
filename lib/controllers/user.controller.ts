@@ -1,7 +1,5 @@
-import {
-    User
-} from '../models/user.model';
 import bcrypt from 'bcrypt-nodejs';
+import { UserModel, User } from '../models';
 
 const SALT_WORK_FACTOR = 12;
 
@@ -14,15 +12,17 @@ export function pruebaUser(req, res) {
 
 export const registerUser = (req, res) => {
 
+    const userModel: UserModel = {
+        name: req.body.name,
+        email: req.body.email,
+        role: 'ROLE_USER',
+        img: 'null',
+        password: req.body.password
+    };
+
     const user = new User();
-    const params = req.body;
 
-    user.name = params.name;
-    user.email = params.email;
-    user.role = 'ROLE_USER';
-    user.image = 'null';
-
-    if (params.password) {
+    if (req.body.password) {
         // Encryp the pass
         // res.status(200).send({
         //     name: user.name,
@@ -32,8 +32,7 @@ export const registerUser = (req, res) => {
         //     password: params.password
         // });
 
-        bcrypt.hash(params.password, null, null, (error, hash) => {
-            debugger;
+        bcrypt.hash(req.body.password, null, null, (error, hash) => {
             console.log('Encripta');
             console.log(hash);
             if (error) {
@@ -44,9 +43,9 @@ export const registerUser = (req, res) => {
                 //     error: 'Server Error',
                 //     code: '500'
                 // });
-            } 
-            user.password = hash;
-            if (user?.name && user?.email) {
+            }
+            userModel.password = hash;
+            if (userModel.name && userModel.email) {
                 console.log('entra');
                 user.save((err, userStored) => {
                     if (err) {
