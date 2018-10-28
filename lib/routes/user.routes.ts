@@ -1,10 +1,10 @@
-import express from 'express';
+import {Router} from 'express';
 import {
     pruebaUser,
     registerUser
 } from '../controllers';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/user', pruebaUser);
 router.post('/user', registerUser);
