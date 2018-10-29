@@ -13,6 +13,6 @@ export class VehicleRoutes {
   }
 
   private getVehicles() {
-    this.router.get('/vehicles', this.vehiclesCtrl.getVehicles);
+    this.router.get('/', this.vehiclesCtrl.getVehicles);
   }
 }

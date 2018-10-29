@@ -4,6 +4,7 @@ import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
+import * as methodOverride from 'method-override';
 import { Routes } from './routes';
 
 // routes
@@ -36,6 +37,7 @@ export class App {
       })
     );
     this.app.use(bodyParser.json());
+    this.app.use(methodOverride());
     this.app.use(cookieParser());
   }
 

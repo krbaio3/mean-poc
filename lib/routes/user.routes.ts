@@ -1,9 +1,22 @@
 import { Router } from 'express';
-import { pruebaUser, registerUser } from '../controllers';
+import { UserController } from '../controllers';
 
-const router = Router();
+export class UserRoutes {
+  public router: Router;
+  public userController: UserController;
 
-router.get('/user', pruebaUser);
-router.post('/user', registerUser);
+  constructor() {
+    this.router = Router();
+    this.userController = new UserController();
+    this.getPruebaUser();
+    this.postRegisterUser();
+    // this.vehicles();
+  }
 
-module.exports = router;
+  private getPruebaUser() {
+    this.router.get('/prueba', this.userController.pruebaUser);
+  }
+  private postRegisterUser() {
+    this.router.post('/addUser', this.userController.addUser);
+  }
+}

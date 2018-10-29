@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 
-const BillSchema = Schema({
+const BillSchema = new Schema({
     numBill: String,
     description: String,
     units: Number,
@@ -12,4 +11,4 @@ const BillSchema = Schema({
     owner: { type: Schema.Types.ObjectId, ref: 'Owner'}
 });
 
-export const Bill = mongoose.model('Bill', BillSchema);
+export const Bill = model('Bill', BillSchema);

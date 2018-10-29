@@ -1,8 +1,13 @@
 #!/usr/bin/env node
-
 /**
  * Module dependencies.
  */
+import index from '../lib/index';
+import constantes from '../lib/utils';
+
+
+
+const run = new index();
 
 let app = require('../lib/app');
 let debug = require('debug')('mean-poc:server');
