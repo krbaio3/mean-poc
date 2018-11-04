@@ -20,6 +20,8 @@ or
 $ yarn install
 ```
 
+and exec this command: `yarn watch-dev` to run in develop mode
+
 ### WiKi
 
 You can visit the wiki in this [link]()
