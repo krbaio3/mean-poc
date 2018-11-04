@@ -5,6 +5,8 @@ import * as morgan from 'morgan';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as methodOverride from 'method-override';
+import * as passport from 'passport';
+import { Strategy } from 'passport-openid';
 import { Routes } from './routes';
 
 // routes

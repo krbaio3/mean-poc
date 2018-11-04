@@ -1,4 +1,4 @@
-import { Schema, model} from 'mongoose';
+import { Document } from 'mongoose';
 
 export interface UserModel {
     id?: any
@@ -7,14 +7,15 @@ export interface UserModel {
     role: string;
     img: string;
     password: string;
+    phone: string;
 }
 
-const UserSchema = new Schema({
-    name: String,
-    email: String,
-    role: String,
-    img: String,
-    password: String
-});
-
-export const User = model('User', UserSchema);
+export interface UserMongoose extends Document {
+    id?: any
+    name: string;
+    email: string;
+    role: string;
+    img: string;
+    password: string;
+    phone: string;
+}
