@@ -6,7 +6,8 @@ import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as methodOverride from 'method-override';
 import * as passport from 'passport';
-import { Strategy } from 'passport-openid';
+import * as helmet from 'helmet';
+import { Strategy } from 'passport-openidconnect';
 import { Routes } from './routes';
 
 // routes
@@ -27,9 +28,8 @@ export class App {
     this.routes();
   }
 
-  private config(): void {}
-
-  private middleware(): void {
+  private config(): void {
+    this.app.use(helmet());
     this.app.use(cors());
     // this.app.use(morgan('short'));
     this.app.use(morgan('dev'));
@@ -41,6 +41,9 @@ export class App {
     this.app.use(bodyParser.json());
     this.app.use(methodOverride());
     this.app.use(cookieParser());
+  }
+
+  private middleware(): void {
   }
 
   private routes(): void {
