@@ -1,23 +1,24 @@
-import { Request, Response, NextFunction } from 'express';
 import { decode } from 'jwt-simple';
-import { unix, now } from 'moment';
+import moment from 'moment';
+import { JwtServices } from '../services/jwt.service';
+import { Request, Response, NextFunction } from 'express';
 
-export class JwtServices {
-  public key = 'SECRET_TOKEN';
+export class AuthMiddleware {
   constructor() {}
 
   public ensureAuth(req: Request, res: Response, next: NextFunction) {
     if (!req.headers.authorization) {
       return res.status(403).send({
-        message: 'La peticion no tiene cabecera de autenticación'
+        message: 'La petición no tiene cabecera de autenticación'
       });
     }
 
     const token = req.headers.authorization.replace(/['"]+/g, '');
 
     try {
-      const payload = decode(token, this.key);
-      if (payload.exp <= unix(now())) {
+      const key: string = new JwtServices().getKey();
+      const payload = decode(token, key);
+      if (payload.exp <= moment().unix()) {
         return res.status(401).send({ message: 'Token expirado' });
       }
       req.user = payload;

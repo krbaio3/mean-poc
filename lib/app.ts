@@ -1,14 +1,15 @@
 // 3rd party
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as morgan from 'morgan';
-import * as cookieParser from 'cookie-parser';
-import * as cors from 'cors';
-import * as methodOverride from 'method-override';
-import * as passport from 'passport';
-import * as helmet from 'helmet';
-import { Strategy } from 'passport-openidconnect';
+import express from 'express';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import methodOverride from 'method-override';
+import { initialize, session } from 'passport';
+import helmet from 'helmet';
 import { Routes } from './routes';
+import { AuthController } from './passport/auth.controller';
+import { PassportCustom } from './passport/passport';
 
 // routes
 // import { VehicleRouter } from './routes/vehicle.routes';
@@ -17,6 +18,8 @@ import { Routes } from './routes';
 export class App {
   public app: express.Application;
   public route: express.Router = new Routes().router;
+  public authController: AuthController = new AuthController();
+  public passportCustom: PassportCustom;
 
   constructor() {
     // config cabeceras http
@@ -35,7 +38,7 @@ export class App {
     this.app.use(morgan('dev'));
     this.app.use(
       bodyParser.urlencoded({
-        extended: false
+        extended: true
       })
     );
     this.app.use(bodyParser.json());
@@ -44,9 +47,13 @@ export class App {
   }
 
   private middleware(): void {
+    this.app.use(initialize());
+    this.app.use(session());
+    this.passportCustom = new PassportCustom();
   }
 
   private routes(): void {
     this.app.use('/api', this.route);
+    this.app.use('/auth', this.authController.authLogin);
   }
 }

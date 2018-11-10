@@ -106,9 +106,8 @@
         "express-graphql": "^0.6.12",
         "express-jwt": "^5.3.1",
         "express-validation": "^1.0.2",
-        "express-winston": "^3.0.0",
         "graphql": "^14.0.2",
-        "graphql-server-express": "latest",
+        "graphql-server-express": "^1.4.0",
         "graphql-tag": "^2.10.0",
         "graphql-tools": "^4.0.0",
         "hapi": "^17.6.0",
@@ -124,9 +123,9 @@
         "mongoose-pagination": "^1.0.0",
         "morgan": "^1.9.1",
         "passport": "^0.4.0",
-        "passport-openidconnect": "^0.0.2",
-        "preboot": "^6.0.0-beta.6",
-        "winston": "^3.1.0"
+        "passport-jwt": "^4.0.0",
+        "passport-local": "^1.0.0",
+        "preboot": "^6.0.0-beta.6"
     },
     "devDependencies": {
         "@babel/cli": "^7.0.0",
@@ -157,6 +156,7 @@
         "@types/morgan": "^1.7.32",
         "@types/node": "^10.11.6",
         "@types/passport": "^0.4.7",
+        "@types/passport-jwt": "^3.0.1",
         "concurrently": "^4.0.1",
         "cross-env": "^5.2.0",
         "find-root": "^1.1.0",

@@ -19,7 +19,7 @@
             ],
             "args": [
                 "${workspaceRoot}/src/index.ts",
-                "--project", "${workspaceRoot}/tsconfig.development.json"
+                "--project", "${workspaceRoot}/tsconfig.json"
             ],
             "restart": true,
             "console": "integratedTerminal",
@@ -36,7 +36,7 @@
             "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/nodemon",
             "runtimeArgs": [
                 "--inspect=5858"
-            ],
+            ],YUJH6ZA<» Æ¢SVUJM6KYHZXtjnm6h5zx
             "program": "${workspaceRoot}/lib/index.ts",
             "restart": true,
             "port": 5858,

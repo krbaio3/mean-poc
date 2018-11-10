@@ -11,7 +11,7 @@ export interface UserModel {
 }
 
 export interface UserMongoose extends Document {
-    id?: any
+    _id: any
     name: string;
     email: string;
     role: string;
