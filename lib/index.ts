@@ -1,14 +1,14 @@
-import * as express from 'express';
-import * as mongoose from 'mongoose';
+import express from 'express';
+import mongoose from 'mongoose';
 import { App } from './app';
-import * as blueBird from 'bluebird';
-import { CONS } from './utils/constants';
+import blueBird from 'bluebird';
+import { CONST } from './utils/constants';
 
 class Server {
-  private nameDB: string = CONS.nameDB;
-  private port: string | number = CONS.port;
-  private portMongodb: string | number = CONS.portMongodb;
-  private url: string = CONS.url;
+  private nameDB: string = CONST.nameDB;
+  private port: string | number = CONST.port;
+  private portMongodb: string | number = CONST.portMongodb;
+  private url: string = CONST.url;
   public app: express.Application = new App().app;
 
   constructor() {

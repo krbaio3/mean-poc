@@ -21,7 +21,8 @@ const VehicleSchema = new Schema({
   },
   cylinders: {
     type: Number,
-    required: '4'
+    required: 'Number of cylinders is required',
+    default: '4'
   }
 });
 
